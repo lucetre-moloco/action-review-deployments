@@ -10,7 +10,7 @@ jobs:
       - run: echo 'run tests'
 
   deploy-dev:
-    name: Deploy(Dev)
+    name: Dev deployment
     needs: test
     runs-on: ubuntu-latest
     steps:
@@ -18,7 +18,7 @@ jobs:
       - run: echo 'dev deployment'
 
   deploy-production:
-    name: Deploy(Production)
+    name: Prod deployment
     needs: deploy-dev
     environment: production
     runs-on: ubuntu-latest
