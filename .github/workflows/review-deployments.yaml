@@ -29,9 +29,11 @@ jobs:
   ready-to-go:
     name: Ready to go
     needs: deploy-dev
+    environment: ready-to-go
     runs-on: ubuntu-latest
     steps:
-      - run: |
+      - name: Approve deployment
+        run: |
           BODY=$(jq -n --argjson env_id $PROD_ENV_ID \
               '{"environment_ids":[$env_id],"state":"approved","comment":"Ship it!"}')
 
