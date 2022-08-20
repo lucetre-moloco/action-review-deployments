@@ -27,7 +27,7 @@ jobs:
       - run: echo 'production deployment'
 
   ready-to-go:
-    name: Ready to go
+    name: Auto-review deployment
     needs: deploy-dev
     environment: ready-to-go
     runs-on: ubuntu-latest
