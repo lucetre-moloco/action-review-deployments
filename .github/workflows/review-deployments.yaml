@@ -6,7 +6,6 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - run: echo 'run tests'
 
   deploy-dev:
@@ -14,16 +13,15 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - run: echo 'dev deployment'
 
-  deploy-production:
+  deploy-prod:
+    timeout-minutes: 1
     name: Prod deployment
     needs: deploy-dev
     environment: production
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
       - run: echo 'production deployment'
 
   ready-to-go:
