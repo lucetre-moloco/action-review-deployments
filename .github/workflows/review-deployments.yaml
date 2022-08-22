@@ -9,14 +9,14 @@ jobs:
       - run: echo 'run tests'
 
   deploy-dev:
-    name: Dev deployment
+    name: Development
     needs: test
     runs-on: ubuntu-latest
     steps:
       - run: echo 'dev deployment'
 
   deploy-prod:
-    name: Prod deployment
+    name: Production
     needs: deploy-dev
     environment: production
     runs-on: ubuntu-latest
@@ -24,16 +24,16 @@ jobs:
       - run: echo 'production deployment'
 
   ready-to-go:
-    name: Auto-review
+    name: Review timer
     needs: deploy-dev
     environment: ready-to-go
     runs-on: ubuntu-latest
     steps:
-      - name: Approve deployment
+      - name: Reject deployment
         run: |
           echo $PROD_ENV_ID
           BODY=$(jq -n --argjson env_id $PROD_ENV_ID \
-              '{"environment_ids":[$env_id],"state":"rejected","comment":"Timeout!"}')
+              '{"environment_ids":[$env_id],"state":"rejected","comment":"Timeout"}')
           echo $BODY | jq
           curl -X POST \
               -H "Accept: application/vnd.github+json" \
