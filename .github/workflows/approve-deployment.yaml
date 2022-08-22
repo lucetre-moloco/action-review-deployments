@@ -23,8 +23,8 @@ jobs:
     steps:
       - run: echo 'production deployment'
 
-  approve:
-    name: Approve
+  timer:
+    name: Timer
     needs: deploy-dev
     environment: auto-review
     runs-on: ubuntu-latest
