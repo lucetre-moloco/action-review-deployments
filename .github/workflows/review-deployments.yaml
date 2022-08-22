@@ -33,7 +33,7 @@ jobs:
         run: |
           echo $PROD_ENV_ID
           BODY=$(jq -n --argjson env_id $PROD_ENV_ID \
-              '{"environment_ids":[$env_id],"state":"rejected","comment":"Ship it!"}')
+              '{"environment_ids":[$env_id],"state":"rejected","comment":"Timeout!"}')
           echo $BODY | jq
           curl -X POST \
               -H "Accept: application/vnd.github+json" \
