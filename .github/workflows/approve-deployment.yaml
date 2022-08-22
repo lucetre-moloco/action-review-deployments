@@ -1,0 +1,47 @@
+name: Approve deployment
+on: push
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'run tests'
+
+  deploy-dev:
+    name: Development
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'dev deployment'
+
+  deploy-prod:
+    name: Production
+    needs: deploy-dev
+    environment: production
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'production deployment'
+
+  review-timer:
+    name: Review timer
+    needs: deploy-dev
+    environment: ready-to-go
+    runs-on: ubuntu-latest
+    steps:
+      - name: Approve deployment
+        run: |
+          echo $PROD_ENV_ID
+          BODY=$(jq -n --argjson env_id $PROD_ENV_ID \
+              '{"environment_ids":[$env_id],"state":"approved","comment":"Ship it!"}')
+          echo $BODY | jq
+          curl -X POST \
+              -H "Accept: application/vnd.github+json" \
+              -H "Authorization: token $TOKEN" \
+              https://api.github.com/repos/$REPO/actions/runs/$RUN_ID/pending_deployments \
+              -d "$BODY"
+        env:
+          RUN_ID: ${{ github.run_id }}
+          PROD_ENV_ID: 598617706
+          REPO: ${{ github.repository }}
+          TOKEN: ${{ secrets.TOKEN }}
