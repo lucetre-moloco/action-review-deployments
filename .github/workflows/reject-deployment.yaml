@@ -23,10 +23,10 @@ jobs:
     steps:
       - run: echo 'production deployment'
 
-  review-timer:
-    name: Review timer
+  reject:
+    name: Reject
     needs: deploy-dev
-    environment: ready-to-go
+    environment: auto-review
     runs-on: ubuntu-latest
     steps:
       - name: Reject deployment
