@@ -1,4 +1,4 @@
-name: Deployment
+name: Reject deployment
 on: push
 
 jobs:
@@ -23,7 +23,7 @@ jobs:
     steps:
       - run: echo 'production deployment'
 
-  ready-to-go:
+  review-timer:
     name: Review timer
     needs: deploy-dev
     environment: ready-to-go
