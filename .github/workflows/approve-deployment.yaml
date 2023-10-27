@@ -1,5 +1,7 @@
 name: Approve deployment
-on: push
+on:
+  push:
+  workflow_dispatch:
 
 jobs:
   test:
